@@ -6,58 +6,58 @@
 
 ## 📘 Table of Contents
 
-1. [What is Docker?](#-what-is-docker)  
-2. [Why DevOps Uses Docker](#-why-devops-uses-docker)  
-3. [Key Concepts in Docker](#-key-concepts-in-docker)  
-4. [Docker Architecture](#-docker-architecture)  
-5. [Installing Docker](#-installing-docker)  
-6. [Basic Docker Commands](#-basic-docker-commands)  
-7. [Docker Images & Containers](#-docker-images--containers)  
-8. [Dockerfile Explained](#-dockerfile-explained)  
-9. [Docker Networking](#-docker-networking)  
-10. [Docker Volumes (Storage)](#-docker-volumes-storage)  
-11. [Docker Compose](#-docker-compose)  
-12. [Best Practices for DevOps](#-best-practices-for-devops)  
-13. [Real DevOps Example: Deploying Node.js + MongoDB App](#-real-devops-example-deploying-nodejs--mongodb-app)  
-14. [Interview Questions & Answers](#-interview-questions--answers)  
+1. [What is Docker?](#-what-is-docker)
+2. [Why DevOps Uses Docker](#-why-devops-uses-docker)
+3. [Key Concepts in Docker](#-key-concepts-in-docker)
+4. [Docker Architecture](#-docker-architecture)
+5. [Installing Docker](#-installing-docker)
+6. [Basic Docker Commands](#-basic-docker-commands)
+7. [Docker Images & Containers](#-docker-images--containers)
+8. [Dockerfile Explained](#-dockerfile-explained)
+9. [Docker Networking](#-docker-networking)
+10. [Docker Volumes (Storage)](#-docker-volumes-storage)
+11. [Docker Compose](#-docker-compose)
+12. [Best Practices for DevOps](#-best-practices-for-devops)
+13. [Real DevOps Example: Deploying Node.js + MongoDB App](#-real-devops-example-deploying-nodejs--mongodb-app)
+14. [Interview Questions & Answers](#-interview-questions--answers)
 
 ---
 
-## 🧩 What is Docker?
+## 🧙‍♂️ What is Docker?
 
 **Docker** is an open-source platform that allows you to build, run, and ship applications inside lightweight, portable **containers**.
 
-A **container** = Application + Dependencies + OS libraries  
+A **container** = Application + Dependencies + OS libraries
 ➡️ Ensures the app runs the same in all environments (local, testing, or production).
 
 ---
 
 ## ⚙️ Why DevOps Uses Docker
 
-| Reason | Description |
-|--------|--------------|
-| 🧱 **Consistency** | Avoids “works on my machine” issues. |
-| 🚀 **Speed** | Runs apps faster than virtual machines. |
-| 🧩 **Isolation** | Each app runs independently. |
+| Reason                   | Description                                          |
+| ------------------------ | ---------------------------------------------------- |
+| 🧱 **Consistency**       | Avoids “works on my machine” issues.                 |
+| 🚀 **Speed**             | Runs apps faster than virtual machines.              |
+| 🤩 **Isolation**         | Each app runs independently.                         |
 | 📦 **CI/CD Integration** | Easily fits into Jenkins / GitHub Actions pipelines. |
-| 💰 **Efficiency** | Uses fewer resources than VMs. |
+| 💰 **Efficiency**        | Uses fewer resources than VMs.                       |
 
 ---
 
 ## 🧠 Key Concepts in Docker
 
-| Concept | Meaning |
-|----------|----------|
-| **Image** | A template containing app code + dependencies. |
-| **Container** | A running instance of an image. |
-| **Dockerfile** | Instructions to build an image. |
-| **Registry** | Storage for images (e.g., Docker Hub). |
-| **Volumes** | Persistent data storage. |
-| **Networks** | Communication between containers. |
+| Concept        | Meaning                                        |
+| -------------- | ---------------------------------------------- |
+| **Image**      | A template containing app code + dependencies. |
+| **Container**  | A running instance of an image.                |
+| **Dockerfile** | Instructions to build an image.                |
+| **Registry**   | Storage for images (e.g., Docker Hub).         |
+| **Volumes**    | Persistent data storage.                       |
+| **Networks**   | Communication between containers.              |
 
 ---
 
-## 🏗️ Docker Architecture
+## 🎗️ Docker Architecture
 
 Docker has 3 main components:
 
@@ -65,20 +65,19 @@ Docker has 3 main components:
 2. **Docker Daemon (dockerd)** → Executes commands.
 3. **Docker Registry** → Stores images (like Docker Hub).
 
+```
 +--------------------+
-| Docker Client |
+|   Docker Client    |
 +--------------------+
-|
-v
+           |
+           v
 +--------------------+
-| Docker Daemon |
+|  Docker Daemon     |
 +--------------------+
-/
-v v
-Docker Images Containers
-
-yaml
-Copy code
+      /          \
+     v            v
+ Docker Images   Containers
+```
 
 ---
 
@@ -92,47 +91,65 @@ sudo apt install docker.io -y
 sudo systemctl enable docker
 sudo systemctl start docker
 docker --version
-🔹 On Windows/Mac
-Download Docker Desktop from:
-👉 https://www.docker.com/products/docker-desktop
+```
 
-🧾 Basic Docker Commands
-Command	Description
-docker version	Check Docker version
-docker images	List local images
-docker ps	List running containers
-docker ps -a	List all containers
-docker pull nginx	Download image
-docker run nginx	Run container
-docker stop <id>	Stop container
-docker rm <id>	Remove container
-docker rmi <image>	Remove image
+### 🔹 On Windows/Mac
 
-📦 Docker Images & Containers
-▶️ Run Nginx
-bash
-Copy code
+Download **Docker Desktop** from:
+🔗 [https://www.docker.com/products/docker-desktop](https://www.docker.com/products/docker-desktop)
+
+---
+
+## 🧾 Basic Docker Commands
+
+| Command              | Description             |
+| -------------------- | ----------------------- |
+| `docker version`     | Check Docker version    |
+| `docker images`      | List local images       |
+| `docker ps`          | List running containers |
+| `docker ps -a`       | List all containers     |
+| `docker pull nginx`  | Download image          |
+| `docker run nginx`   | Run container           |
+| `docker stop <id>`   | Stop container          |
+| `docker rm <id>`     | Remove container        |
+| `docker rmi <image>` | Remove image            |
+
+---
+
+## 📦 Docker Images & Containers
+
+### ▶️ Run Nginx
+
+```bash
 docker run -d -p 8080:80 nginx
-Flags explained:
+```
 
--d → Detached mode
+**Flags explained:**
 
--p → Port mapping (Host:Container)
+* `-d` → Detached mode
+* `-p` → Port mapping (Host:Container)
 
-🔍 View Logs
-bash
-Copy code
+### 🔍 View Logs
+
+```bash
 docker logs <container_id>
-💻 Access Container Shell
-bash
-Copy code
-docker exec -it <container_id> /bin/bash
-🏗️ Dockerfile Explained
-A Dockerfile defines how to build a Docker image.
+```
 
-Example: Node.js App
-dockerfile
-Copy code
+### 🖥️ Access Container Shell
+
+```bash
+docker exec -it <container_id> /bin/bash
+```
+
+---
+
+## 🎗️ Dockerfile Explained
+
+A **Dockerfile** defines how to build a Docker image.
+
+### Example: Node.js App
+
+```dockerfile
 # Base image
 FROM node:18-alpine
 
@@ -151,43 +168,64 @@ CMD ["npm", "start"]
 
 # Expose port
 EXPOSE 3000
-Build Image
-bash
-Copy code
-docker build -t mynodeapp .
-Run Container
-bash
-Copy code
-docker run -d -p 3000:3000 mynodeapp
-🌐 Docker Networking
-Types of Networks
-Type	Description
-Bridge	Default; connects containers on the same host.
-Host	Uses host’s network directly.
-None	No network access.
-Custom	User-defined isolated network.
+```
 
-Example
-bash
-Copy code
+### Build Image
+
+```bash
+docker build -t mynodeapp .
+```
+
+### Run Container
+
+```bash
+docker run -d -p 3000:3000 mynodeapp
+```
+
+---
+
+## 🌐 Docker Networking
+
+### Types of Networks
+
+| Type       | Description                                    |
+| ---------- | ---------------------------------------------- |
+| **Bridge** | Default; connects containers on the same host. |
+| **Host**   | Uses host’s network directly.                  |
+| **None**   | No network access.                             |
+| **Custom** | User-defined isolated network.                 |
+
+### Example
+
+```bash
 docker network create mynet
 docker run -d --network=mynet nginx
-💾 Docker Volumes (Storage)
-Used to store data persistently even after container removal.
+```
 
-Example
-bash
-Copy code
+---
+
+## 💮 Docker Volumes (Storage)
+
+Used to store data **persistently** even after container removal.
+
+### Example
+
+```bash
 docker volume create mydata
 docker run -v mydata:/data nginx
-Useful for databases (MySQL, MongoDB, PostgreSQL, etc.)
+```
 
-🧩 Docker Compose
-Tool to manage multi-container applications using YAML configuration.
+Useful for **databases** (MySQL, MongoDB, PostgreSQL, etc.)
 
-Example: docker-compose.yml
-yaml
-Copy code
+---
+
+## 🧙 Docker Compose
+
+Tool to manage multi-container applications using **YAML** configuration.
+
+### Example: `docker-compose.yml`
+
+```yaml
 version: "3"
 services:
   web:
@@ -201,30 +239,43 @@ services:
 
 volumes:
   mydata:
-Run the app
-bash
-Copy code
+```
+
+### Run the app
+
+```bash
 docker-compose up -d
-Stop all services
-bash
-Copy code
+```
+
+### Stop all services
+
+```bash
 docker-compose down
-🧠 Best Practices for DevOps
-✅ Use .dockerignore to reduce image size.
-✅ Use multi-stage builds for optimized images.
-✅ Store credentials in .env files, not images.
-✅ Use official base images from trusted sources.
-✅ Separate app logic from data storage.
-✅ Always tag images (e.g., myapp:v1.0.0).
+```
+
+---
+
+## 🧠 Best Practices for DevOps
+
+✅ Use **.dockerignore** to reduce image size.
+✅ Use **multi-stage builds** for optimized images.
+✅ Store **credentials** in `.env` files, not images.
+✅ Use **official base images** from trusted sources.
+✅ Separate **app logic** from **data storage**.
+✅ Always **tag** images (e.g., `myapp:v1.0.0`).
 ✅ Clean up unused resources:
 
-bash
-Copy code
+```bash
 docker system prune -af
-🚀 Real DevOps Example: Deploying Node.js + MongoDB App
-Dockerfile
-dockerfile
-Copy code
+```
+
+---
+
+## 🚀 Real DevOps Example: Deploying Node.js + MongoDB App
+
+### Dockerfile
+
+```dockerfile
 FROM node:18-alpine
 WORKDIR /app
 COPY package*.json ./
@@ -232,9 +283,11 @@ RUN npm install
 COPY . .
 CMD ["npm", "start"]
 EXPOSE 3000
-docker-compose.yml
-yaml
-Copy code
+```
+
+### docker-compose.yml
+
+```yaml
 version: "3.8"
 services:
   app:
@@ -251,27 +304,40 @@ services:
 
 volumes:
   mongo_data:
-Run everything
-bash
-Copy code
+```
+
+### Run everything
+
+```bash
 docker-compose up -d
-Access app at 👉 http://localhost:3000
+```
 
-💬 Interview Questions & Answers
-Question	Answer
-What’s the difference between Image and Container?	Image = blueprint, Container = running instance.
-How is Docker different from a VM?	Containers share the host OS kernel, faster and lighter.
-What’s a Dockerfile?	A script that defines how to build a Docker image.
-What is Docker Compose used for?	Managing multi-container applications.
-How to persist data in Docker?	Using Volumes.
-What’s the default Docker network?	Bridge.
-How do you connect containers together?	Using a shared Docker network.
+Access app at 🔗 [http://localhost:3000](http://localhost:3000)
 
-📚 References
-Docker Official Documentation
+---
 
-Play with Docker (Labs)
+## 💬 Interview Questions & Answers
 
-Docker Hub
+| Question                                           | Answer                                                   |
+| -------------------------------------------------- | -------------------------------------------------------- |
+| What’s the difference between Image and Container? | Image = blueprint, Container = running instance.         |
+| How is Docker different from a VM?                 | Containers share the host OS kernel, faster and lighter. |
+| What’s a Dockerfile?                               | A script that defines how to build a Docker image.       |
+| What is Docker Compose used for?                   | Managing multi-container applications.                   |
+| How to persist data in Docker?                     | Using Volumes.                                           |
+| What’s the default Docker network?                 | Bridge.                                                  |
+| How do you connect containers together?            | Using a shared Docker network.                           |
 
-Dockerfile Best Practices
+---
+
+## 📚 References
+
+* [Docker Official Documentation](https://docs.docker.com/)
+* [Play with Docker (Labs)](https://labs.play-with-docker.com/)
+* [Docker Hub](https://hub.docker.com/)
+* [Dockerfile Best Practices](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)
+
+---
+
+✅ **Author:** *Ahmed Mohamed – DevOps Learning Documentation*
+🔖 **Updated:** November 2025
